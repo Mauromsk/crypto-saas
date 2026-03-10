@@ -43,3 +43,12 @@ export default async function handler(req, res) {
   }
 
 }
+export default function handler(req, res) {
+  res.status(200).json({
+    BTC: 65000,
+    ETH: 3200,
+    SOL: 150
+  });
+}
+
+
