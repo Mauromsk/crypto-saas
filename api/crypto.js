@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export default async function handler(req, res) {
 
   try {
@@ -42,3 +43,12 @@ export default async function handler(req, res) {
   }
 
 }
+=======
+export default function handler(req, res) {
+  res.status(200).json({
+    status: "API funcionando",
+    crypto: "bitcoin",
+    price: 65000
+  });
+}
+>>>>>>> 434f38683fc22eb9a4bf102b128d3e106cc056fc
