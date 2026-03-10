@@ -1,20 +1,44 @@
 export default async function handler(req, res) {
 
-  const coin = req.query.coin || "bitcoin";
+  try {
 
-  const url = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=1`;
+    const coin = req.query.coin || "bitcoin";
 
-  const response = await fetch(url);
-  const data = await response.json();
+    // obtener datos de los ultimos 7 dias
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=7`
+    );
 
-  res.status(200).json({
-    coin: coin,
-    prices: data.prices
-  });
+    const data = await response.json();
 
-}
-export default async function handler(req, res) {
-  res.status(200).json({
-    message: "API funcionando"
-  });
+    const prices = data.prices.map(p => p[1]);
+
+    const currentPrice = prices[prices.length - 1];
+
+    // calcular media movil simple
+    const average =
+      prices.reduce((a, b) => a + b, 0) / prices.length;
+
+    // calcular tendencia
+    const trend = currentPrice > average ? "bullish" : "bearish";
+
+    // señal simple
+    const signal = currentPrice > average ? "BUY" : "SELL";
+
+    res.status(200).json({
+      coin: coin,
+      price: currentPrice,
+      moving_average: average.toFixed(2),
+      trend: trend,
+      signal: signal
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      error: "error getting crypto data"
+    });
+
+  }
+
 }
