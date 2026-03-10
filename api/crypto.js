@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
     const coin = req.query.coin || "bitcoin";
 
-    // obtener datos de los ultimos 7 dias
+    // obtener datos de los últimos 7 días
     const response = await fetch(
       `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=7`
     );
@@ -21,10 +21,10 @@ export default async function handler(req, res) {
       prices.reduce((a, b) => a + b, 0) / prices.length;
 
     // calcular tendencia
-    const trend = currentPrice > average ? "bullish" : "bearish";
+    const trend = currentPrice > average ? "bullish": "bearish";
 
     // señal simple
-    const signal = currentPrice > average ? "BUY" : "SELL";
+    const signal = currentPrice > average ? "BUY": "SELL";
 
     res.status(200).json({
       coin: coin,
@@ -43,12 +43,4 @@ export default async function handler(req, res) {
   }
 
 }
-=======
-export default function handler(req, res) {
-  res.status(200).json({
-    status: "API funcionando",
-    crypto: "bitcoin",
-    price: 65000
-  });
-}
->>>>>>> 434f38683fc22eb9a4bf102b128d3e106cc056fc
+
